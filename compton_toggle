@@ -1,20 +1,26 @@
 #!/usr/bin/zsh
 nvidia_dev='/dev/nvidia0'
-lockfile='/tmp/compton.lock'
-if [[ -r $lockfile ]]; then
-	read pid < $lockfile
-	kill $pid
-	rm $lockfile
-else
-	if [[ -e $nvidia_dev ]]; then
-		vsync_backend='opengl'
-	else
-		vsync_backend='drm'
-	fi
-	compton --vsync $vsync_backend --unredir-if-possible --paint-on-overlay -cGCb -t-5 -l-5 -r4 -o.55 -m.95
-	pid=$(pidof compton)
-	if [[ -n $pid ]]; then
-		printf '%s' $pid > $lockfile
+pidfile='/tmp/compton.pid'
+
+if [[ -r $pidfile ]]; then
+	read pid < $pidfile
+	rm $pidfile
+	if kill $pid; then
+		exit 0
 	fi
 fi
+
+if [[ -e $nvidia_dev ]]; then
+	vsync_backend='opengl'
+else
+	vsync_backend='drm'
+fi
+compton --vsync $vsync_backend -cGC -t-5 -l-5 -r4 -o.55 -m.9 &
+pid=$!
+if [[ -n $pid ]]; then
+	printf '%s' $pid > $pidfile
+else
+	exit 1
+fi
+disown
 exit 0
