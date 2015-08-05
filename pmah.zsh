@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 # poor man's aur helper
 uri='https://aur4.archlinux.org'
+dldir='/tmp/aur'
 for i in jq curl; do
 	whence $i &>/dev/null || { printf "missing %s!\n" $i >&2; exit 1 }
 done
@@ -12,8 +13,10 @@ pacman -Qm | while read package version; do
 		updates+=$package
 	fi
 done
-print "Do you want to download the pkgbuilds here? (C-c to cancel)"
+printf 'Do you want to download the pkgbuilds to %s? (C-c to cancel)' $dldir
 read none
+mkdir -p /tmp/aur
+cd /tmp/aur
 for i in $updates; do
 	git clone "$uri/$i.git"
 done
