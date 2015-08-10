@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# taken from https://github.com/iraquitan/custom-scripts/blob/master/simpler.sh
 use open ':std', ':encoding(UTF-8)';
 my $block = shift || (chr(0x2588) x 3);
 for (["", 0], ["1;", 0], ["", 8], ["1;", 8]) {
