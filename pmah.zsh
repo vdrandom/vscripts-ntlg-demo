@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 # poor man's aur helper
-uri='https://aur4.archlinux.org'
+uri='https://aur.archlinux.org'
 dldir='/tmp/aur'
 for i in jq curl; do
 	whence $i &>/dev/null || { printf "missing %s!\n" $i >&2; exit 1 }
