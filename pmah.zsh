@@ -15,8 +15,8 @@ pacman -Qm | while read package version; do
 done
 printf 'Do you want to download the pkgbuilds to %s? (C-c to cancel)' $dldir
 read none
-mkdir -p /tmp/aur
-cd /tmp/aur
+mkdir -p $dldir
+cd $dldir
 for i in $updates; do
 	git clone "$uri/$i.git"
 done
