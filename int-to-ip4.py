@@ -9,6 +9,6 @@ for e in range(3, -1, -1):
     multiplier = 256 ** e
     octet = num // multiplier
     addr.append(str(octet))
-    num -= octet * multiplier
+    num = num % multiplier
 
 print('.'.join(addr))
