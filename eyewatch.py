@@ -2,7 +2,7 @@
 from argparse import ArgumentParser
 from random import randint
 from sys import argv
-from time import sleep
+from time import sleep, strftime
 import gi
 gi.require_version('Notify', '0.7')
 from gi.repository import Notify
@@ -23,7 +23,7 @@ def parse_args(sys_args):
     p.add_argument(
         '-t',
         '--timer',
-        default='300',
+        default='600',
         help='run in foreground, showing notification every TIMER seconds (this is default, with TIMER = 300)'
     )
     p.add_argument(
@@ -47,6 +47,7 @@ def get_random_message(message_list):
 
 def show_notification(notification, icon):
     text = get_random_message(MESSAGES)
+    print('[' + strftime('%H:%M:%S') + '] ' + text)
     if icon is not None:
         notification.update(TITLE, text, icon)
     else:
@@ -63,7 +64,7 @@ if __name__ == '__main__':
         show_notification(notification, args.icon)
     else:
         while True:
-            show_notification(notification, args.icon)
             sleep(int(args.timer))
+            show_notification(notification, args.icon)
 
     Notify.uninit()
