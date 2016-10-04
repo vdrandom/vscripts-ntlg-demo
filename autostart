@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+#
+# A simple autostart script so that I don't have to write it again for each of
+# my installations.
+function check_start
+{
+    # check if the service is running and, if not, start it in the background
+    # and detach
+    service=$1
+    if pgrep -u $USER ${service} >/dev/null; then
+        return 0
+    else
+        ${service} &
+        disown
+    fi
+}
+#check_start nm-applet
