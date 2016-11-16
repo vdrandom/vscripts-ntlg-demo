@@ -19,6 +19,13 @@ password=$(printf '%s\n' "${password_files[@]}" | dmenu -p pass "$@")
 
 if [[ $typeit -eq 0 ]]; then
     pass show -c "$password" 2>/dev/null
+    returns=$?
+    if (( returns )); then
+        msg="failed"
+    else
+        msg="copied"
+    fi
+    notify-send -a "pass" "$msg" "$password"
 else
     pass show "$password" | { read -r pass; printf %s "$pass"; } | xdotool type --clearmodifiers --file -
 fi
