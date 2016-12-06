@@ -5,9 +5,9 @@ cmd=$1
 shift
 get_hosts() {
     awk -F",| " '{print $1}' "${HOME}/.ssh/known_hosts"
-    awk '{if ($1 == "Host") print $2}' "${HOME}/.ssh/config"
+    awk '$1 == "Host" {print $2}' "${HOME}/.ssh/config"
 }
-result=$(get_hosts | sort -u | dmenu -p ssh ${1+"$@"}) || exit 1
+result=$(get_hosts | sort -uV | dmenu -p ssh ${1+"$@"}) || exit 1
 exec $cmd $result
 
 # call from ~/.i3/config:
