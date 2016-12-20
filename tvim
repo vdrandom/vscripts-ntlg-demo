@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+term=default-terminal-emulator
+vim=vim
+#if [[ -x $(type -P nvim) ]]; then
+#    vim=nvim
+#else
+#    vim=vim
+#fi
+
+exec default-terminal-emulator -e $vim $@

@@ -9,11 +9,12 @@ if [[ $1 == "--type" ]]; then
 fi
 
 prefix=${PASSWORD_STORE_DIR-~/.password-store}
+name=${TITLE-pass}
 password_files=( "$prefix"/**/*.gpg )
 password_files=( "${password_files[@]#"$prefix"/}" )
 password_files=( "${password_files[@]%.gpg}" )
 
-password=$(printf '%s\n' "${password_files[@]}" | dmenu -p pass "$@")
+password=$(printf '%s\n' "${password_files[@]}" | dmenu -p ${name} "$@")
 
 [[ -n $password ]] || exit
 
