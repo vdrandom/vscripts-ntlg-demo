@@ -7,4 +7,4 @@ vim=vim
 #    vim=vim
 #fi
 
-exec default-terminal-emulator -e $vim -c 'set mouse=a' $@
+exec $term -e $vim -c 'set mouse=a' "$@"
