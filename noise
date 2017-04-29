@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+case $1 in
+    w) noise_type='whitenoise' ;;
+    b) noise_type='brownnoise' ;;
+    p) noise_type='pinknoise' ;;
+    *) printf "%s is a wrong noise type\n" $1 >&2 ; exit 1 ;;
+esac
+
+play -n synth $noise_type
