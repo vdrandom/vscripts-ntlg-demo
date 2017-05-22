@@ -29,13 +29,6 @@ def parse_args(sys_args):
               '(this is default, with TIMER = 600)')
     )
     p.add_argument(
-        '-o',
-        '--once',
-        action='store_true',
-        default=False,
-        help='show notification once and exit'
-    )
-    p.add_argument(
         '-i',
         '--icon',
         help='show ICON alongside the message'
@@ -49,27 +42,24 @@ def get_random_message(message_list):
     return message_list[random_value]
 
 
-def show_notification(notification, icon):
-    text = get_random_message(MESSAGES)
-    print('[' + strftime('%H:%M:%S') + '] ' + text)
-    if icon is not None:
-        notification.update(TITLE, text, icon)
-    else:
-        notification.update(TITLE, text)
+def show_notification(notification, text=None, icon=None):
+    notification.update(TITLE, text, icon)
     notification.set_urgency(URGENCY)
     notification.show()
 
 
-if __name__ == '__main__':
+def main():
     args = parse_args(argv[1:])
     Notify.init(argv[0])
     notification = Notify.Notification.new(summary=TITLE)
 
-    if args.once:
-        show_notification(notification, args.icon)
-    else:
-        while True:
-            sleep(int(args.timer))
-            show_notification(notification, args.icon)
+    show_notification(notification, 'Eyewatch daemon started!', args.icon)
+    while True:
+        sleep(int(args.timer))
+        text = get_random_message(MESSAGES)
+        show_notification(notification, text, args.icon)
 
     Notify.uninit()
+
+if __name__ == '__main__':
+    main()
