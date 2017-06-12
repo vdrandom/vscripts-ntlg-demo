@@ -3,6 +3,8 @@ BACKGROUND='/tmp/screen_locked.png'
 notify-send DUNST_COMMAND_PAUSE
 scrot $BACKGROUND
 mogrify -scale 10% -colorspace GRAY -scale 1000% $BACKGROUND
+setxkbmap -layout us -variant altgr-intl
 until i3lock -entc 661111 -i $BACKGROUND; do :; done
+mykblayouts
 rm $BACKGROUND
 notify-send DUNST_COMMAND_RESUME
