@@ -1,12 +1,18 @@
 #!/usr/bin/env zsh
+if [[ -r $HOME/.displayrc ]]; then
+    . $HOME/.displayrc
+else
+    exit 1
+fi
+
 variants=(int ext both)
 selection=$(printf "%s\n" $variants|dmenu -p display "$@")
 case $selection in
-    ('int') xrandr --output HDMI1 --off --output eDP1 --auto ;;
-    ('ext') xrandr --output eDP1 --off --output HDMI1 --auto ;;
-    ('both') xrandr --output eDP1 --auto --output HDMI1 --auto --right-of eDP1 ;;
+    ($variants[1]) xrandr --output $DISPLAY2 --off --output $DISPLAY1 --auto ;;
+    ($variants[2]) xrandr --output $DISPLAY1 --off --output $DISPLAY2 --auto ;;
+    ($variants[3]) xrandr --output $DISPLAY1 --auto --output $DISPLAY2 --auto --right-of eDP1 ;;
     (*) exit 0 ;;
 esac
-feh --bg-scale ${HOME}/.wallpaper.png
+feh --bg-scale $HOME/.wallpaper.png
 sleep 1
 exit 0
