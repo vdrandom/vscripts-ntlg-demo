@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+variants=(int ext both)
+selection=$(printf "%s\n" $variants|dmenu -p display "$@")
+case $selection in
+    ('int') xrandr --output HDMI1 --off --output eDP1 --auto ;;
+    ('ext') xrandr --output eDP1 --off --output HDMI1 --auto ;;
+    ('both') xrandr --output eDP1 --auto --output HDMI1 --auto --right-of eDP1 ;;
+    (*) exit 0 ;;
+esac
+feh --bg-scale ${HOME}/.wallpaper.png
+sleep 1
+exit 0
