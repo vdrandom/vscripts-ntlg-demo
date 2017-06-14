@@ -5,14 +5,14 @@ else
     exit 1
 fi
 
-variants=(int ext both)
-selection=$(printf "%s\n" $variants|dmenu -p display "$@")
+variants=('int' 'ext' 'both')
+selection=$(printf "%s\n" $variants|/usr/bin/dmenu -p display "$@")
 case $selection in
-    ($variants[1]) xrandr --output $DISPLAY2 --off --output $DISPLAY1 --auto ;;
-    ($variants[2]) xrandr --output $DISPLAY1 --off --output $DISPLAY2 --auto ;;
-    ($variants[3]) xrandr --output $DISPLAY1 --auto --output $DISPLAY2 --auto --right-of eDP1 ;;
-    (*) exit 0 ;;
+    ($variants[1]) /usr/bin/xrandr --output $DISPLAY2 --off --output $DISPLAY1 --auto ;;
+    ($variants[2]) /usr/bin/xrandr --output $DISPLAY1 --off --output $DISPLAY2 --auto ;;
+    ($variants[3]) /usr/bin/xrandr --output $DISPLAY1 --auto --output $DISPLAY2 --auto --right-of $DISPLAY1 ;;
+    (*) exit 1 ;;
 esac
-feh --bg-scale $HOME/.wallpaper.png
-sleep 1
+/usr/bin/feh --bg-scale $HOME/.wallpaper.png
+/usr/bin/sleep 1
 exit 0
