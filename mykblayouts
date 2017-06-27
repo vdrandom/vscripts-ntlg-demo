@@ -1,6 +1,0 @@
-#!/usr/bin/env zsh
-layouts='us,ru'
-variants='altgr-intl,typewriter'
-opts='ctrl:nocaps,grp:win_space_toggle,compose:menu'
-
-setxkbmap -layout $layouts -variant $variants -option $opts
