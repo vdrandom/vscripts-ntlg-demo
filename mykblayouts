@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+# reset this before setting anything
+setxkbmap us -option
+
+if $(lsusb -d '04d9:0125' > /dev/null); then
+    layouts='us(altgr-intl),ru(typewriter)'
+else
+    layouts='ducky_mini(us),ducky_mini(ru)'
+fi
+opts='grp:win_space_toggle,compose:menu'
+
+setxkbmap $layouts -option $opts
