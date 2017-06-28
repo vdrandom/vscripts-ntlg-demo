@@ -5,6 +5,6 @@ BACKGROUND='/tmp/screen_locked.png'
 /usr/bin/mogrify -scale 10% -colorspace GRAY -scale 1000% $BACKGROUND
 /usr/bin/setxkbmap us
 until /usr/bin/i3lock -entc 661111 -i $BACKGROUND; do :; done
-$HOME/.local/bin/mykblayouts
+$HOME/vscripts/mykblayouts
 /usr/bin/rm $BACKGROUND
 /usr/bin/notify-send DUNST_COMMAND_RESUME
