@@ -3,11 +3,11 @@
 # reset this before setting anything
 setxkbmap us -option
 
-if $(lsusb -d '04d9:0125' > /dev/null); then
+if $(lsusb -d '04d9:0125' > /dev/null) || [[ -n $1 ]]; then
     layouts='us(altgr-intl),ru(typewriter)'
 else
     layouts='ducky_mini(us),ducky_mini(ru)'
 fi
-opts='grp:win_space_toggle,compose:menu'
+opts='grp:win_space_toggle,compose:menu,ctrl:nocaps'
 
 setxkbmap $layouts -option $opts
