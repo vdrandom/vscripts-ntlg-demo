@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+function parse_actions
+{
+    while read action _; do
+        case $action in
+            (LOCK|BLANK)
+                /usr/bin/setxkbmap us -option
+                /usr/bin/notify-send DUNST_COMMAND_PAUSE
+                ;;
+            (UNBLANK)
+                /home/von/vscripts/mykblayouts
+                /usr/bin/notify-send DUNST_COMMAND_RESUME
+                ;;
+        esac
+    done
+}
+
+/usr/bin/xscreensaver-command -watch | parse_actions
