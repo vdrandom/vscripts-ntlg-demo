@@ -11,11 +11,11 @@ if [[ -r $pidfile ]]; then
 fi
 
 if [[ -e $nvidia_dev ]]; then
-	vsync_backend=
+	gpu_opts=
 else
-	vsync_backend=('--vsync' 'drm')
+	gpu_opts=(--dbe --vsync opengl --backend xrender)
 fi
-compton $vsync_backend[@] -cGC -t-5 -l-5 -r4 -o.55 -m.9 &
+compton $gpu_opts[@] -cGC -t-5 -l-5 -r4 -o.55 &
 pid=$!
 if [[ -n $pid ]]; then
 	printf '%s' $pid > $pidfile
