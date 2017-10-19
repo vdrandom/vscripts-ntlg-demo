@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-term=default-terminal-emulator
+term=st
 vim=vim
 #[[ -x $(type -P nvim) ]] && vim=nvim
 
