@@ -6,6 +6,7 @@ function parse_actions
         case $action in
             (LOCK|BLANK)
                 /usr/bin/setxkbmap us -option
+                /usr/bin/numlockx off
                 /usr/bin/notify-send DUNST_COMMAND_PAUSE
                 ;;
             (UNBLANK)
