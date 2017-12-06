@@ -7,7 +7,7 @@ if $(lsusb -d '04d9:0125' > /dev/null) || [[ -n $1 ]]; then
     layouts='us(altgr-intl),ru(typewriter)'
     opts='grp:win_space_toggle,compose:menu,ctrl:nocaps'
 else
-    layouts='ducky_mini(us),ducky_mini(ru)'
+    layouts='us(ducky),ru(ducky)'
     opts='grp:win_space_toggle,compose:menu'
 fi
 
