@@ -30,19 +30,19 @@ class Domain(object):
         if self.utf_8 is not None:
             print('UTF-8: \x1B[1m{}\x1B[0m'.format(self.utf_8))
 
-def parse_arguments(sysargs):
+def parse_arguments():
     """Parse and store arguments."""
     desc = 'A simple punycode to unicode and back converter.'
-    p = argparse.ArgumentParser(description=desc)
+    parser = argparse.ArgumentParser(description=desc)
 
-    p.add_argument('domain', help='domain name to convert')
+    parser.add_argument('domain', help='domain name to convert')
 
     # Store the supplied args
-    return p.parse_args(sysargs)
+    return parser.parse_args()
 
 
 def main(main_sysargs):
-    args = parse_arguments(main_sysargs[1:])
+    args = parse_arguments()
 
     domain = Domain(args.domain)
     domain.display()

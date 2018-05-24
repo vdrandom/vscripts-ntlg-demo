@@ -18,22 +18,22 @@ MESSAGES = (
 )
 
 
-def parse_args(sys_args):
+def parse_args():
     desc = 'display a reminder to take a short break and do some eye practice'
-    p = ArgumentParser(description=desc)
-    p.add_argument(
+    parser = ArgumentParser(description=desc)
+    parser.add_argument(
         '-t',
         '--timer',
         default='600',
         help=('run in foreground, showing notification every TIMER seconds '
               '(this is default, with TIMER = 600)')
     )
-    p.add_argument(
+    parser.add_argument(
         '-i',
         '--icon',
         help='show ICON alongside the message'
     )
-    return p.parse_args(sys_args)
+    return parser.parse_args()
 
 
 def get_random_message(message_list):
@@ -49,7 +49,7 @@ def show_notification(notification, text=None, icon=None):
 
 
 def main():
-    args = parse_args(argv[1:])
+    args = parse_args()
     Notify.init(argv[0])
     notification = Notify.Notification.new(summary=TITLE)
 
