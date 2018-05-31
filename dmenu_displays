@@ -12,6 +12,6 @@ case $selection in
     ($VARIANTS[3]) /usr/bin/xrandr --output $DISPLAY_LEFT --auto --output $DISPLAY_RIGHT --auto --right-of $DISPLAY_LEFT ;;
     (*) exit 1 ;;
 esac
-/usr/bin/feh --bg-scale $HOME/.wallpaper.png
+/usr/bin/feh --bg-${WP_MODE-scale} $HOME/.wallpaper.png
 /usr/bin/sleep 1
 exit 0
