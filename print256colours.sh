@@ -11,7 +11,6 @@ printable_colours=256
 # Return a colour that contrasts with the given colour
 # Bash only does integer division, so keep it integral
 function contrast_colour {
-    local r g b luminance
     colour="$1"
 
     if (( colour < 16 )); then # Initial 16 ANSI colours
@@ -52,9 +51,9 @@ function contrast_colour {
 function print_colour {
     local colour="$1" contrast
     contrast=$(contrast_colour "$1")
-    printf "\e[48;5;%sm" "$colour"                # Start block of colour
-    printf "\e[38;5;%sm%3d" "$contrast" "$colour" # In contrast, print number
-    printf "\e[0m "                               # Reset colour
+    printf "\\e[48;5;%sm" "$colour"                # Start block of colour
+    printf "\\e[38;5;%sm%3d" "$contrast" "$colour" # In contrast, print number
+    printf "\\e[0m "                               # Reset colour
 }
 
 # Starting at $1, print a run of $2 colours
@@ -77,7 +76,7 @@ function print_blocks {
 
     # Print sets of blocks
     for (( i = start; i <= end; i += (blocks_per_line-1) * block_length )) do
-        printf "\n" # Space before each set of blocks
+        printf "\\n" # Space before each set of blocks
         # For each block row
         for (( row = 0; row < block_rows; row++ )) do
             # Print block columns for all blocks on the line
@@ -85,12 +84,12 @@ function print_blocks {
                 print_run $(( i + (block * block_length) )) "$block_cols"
             done
             (( i += block_cols )) # Prepare to print the next row
-            printf "\n"
+            printf "\\n"
         done
     done
 }
 
 print_run 0 16 # The first 16 colours are spread over the whole spectrum
-printf "\n"
+printf "\\n"
 print_blocks 16 231 6 6 3 # 6x6x6 colour cube between 16 and 231 inclusive
 print_blocks 232 255 12 2 1 # Not 50, but 24 Shades of Grey
