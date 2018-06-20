@@ -1,4 +1,4 @@
 #!/usr/bin/bash
 vim_wiki="$HOME/vimwiki/index.wiki"
 # vim wiki to scratchpad
-default-terminal-emulator -name vimwiki -e flock -w0 ${vim_wiki} vim ${vim_wiki}
+default-terminal-emulator -e flock -w0 ${vim_wiki} vim ${vim_wiki}
