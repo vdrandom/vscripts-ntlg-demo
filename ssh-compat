@@ -5,4 +5,5 @@ TERMS=(
     [st]='xterm'
     [tmux]='screen'
 )
-TERM="${TERMS[${TERM%%-256color}]-${TERM%%-256color}}" exec ssh "$@"
+TEMPTERM="${TERM%%-256color}"
+TERM="${TERMS[$TEMPTERM]-${TEMPTERM}}" exec ssh "$@"
