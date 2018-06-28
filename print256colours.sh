@@ -14,7 +14,7 @@ function contrast_colour {
     colour="$1"
 
     if (( colour < 16 )); then # Initial 16 ANSI colours
-        (( colour == 0 )) && printf "15" || printf "0"
+        (( colour == 0 || colour == 8 )) && printf "15" || printf "0"
         return
     fi
 
