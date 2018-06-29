@@ -1,4 +1,0 @@
-#!/usr/bin/bash
-vim_wiki="$HOME/vimwiki/index.wiki"
-# gvim wiki to scratchpad
-flock -w0 ${vim_wiki} gvim ${vim_wiki}

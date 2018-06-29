@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-term=default-terminal-emulator
-vim=$(command -v nvim) || vim=$(command -v vim)
+TERM=$(command -v default-terminal-emulator)
+VIM=$(command -v nvim) || VIM=$(command -v vim)
 
-exec $term -e $vim -c 'set mouse=a' "$@" &>/dev/null & disown
+exec "$TERM" -e "$VIM" -c 'set mouse=a' "$@" &>/dev/null & disown

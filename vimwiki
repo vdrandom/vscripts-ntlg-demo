@@ -1,4 +1,8 @@
 #!/usr/bin/bash
-vim_wiki="$HOME/vimwiki/index.wiki"
-# vim wiki to scratchpad
-default-terminal-emulator -e flock -w0 ${vim_wiki} vim ${vim_wiki}
+case $1 in
+    -g) VIM=$(command -v gvim);;
+    -n) VIM=$(command -v nvim) || VIM=$(command -v vim);;
+    *) VIM=$(command -v tvim);;
+esac
+VIMWIKI_RC="$HOME/vimwiki/.vimwikirc"
+exec flock -w0 "$VIMWIKI_RC" "$VIM" -c "source $VIMWIKI_RC"
