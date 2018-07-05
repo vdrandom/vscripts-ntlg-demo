@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
-TERM=$(command -v default-terminal-emulator)
-VIM=$(command -v nvim) || VIM=$(command -v vim)
+typeset -a vimopt=(
+    '--cmd' 'let g:tvim = 1'
+    '--cmd' "set tgc mouse=a title titlestring=[%F]%m\\ -\\ TVIM"
+)
 
-exec "$TERM" -e "$VIM" -c 'set mouse=a' "$@" &>/dev/null & disown
+error() {
+    echo "$*" >&2
+    exit 1
+}
+
+termbin=$(command -v st) || termbin=$(command -v xterm) || error "No terminal found!"
+vimbin=$(command -v nvim) || vimbin=$(command -v vim) || error "No vim binary found!"
+
+exec "$termbin" -e "$vimbin" "${vimopt[@]}" "$@" &>/dev/null & disown

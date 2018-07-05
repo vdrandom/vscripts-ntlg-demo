@@ -1,8 +1,13 @@
 #!/usr/bin/bash
+index="$HOME/vimwiki/index.wiki"
+typeset -a vimopts=(
+    '--cmd' 'packadd vimwiki'
+    '-c' 'set titlestring=vimwiki'
+    "$index"
+)
 case $1 in
-    -g) VIM=$(command -v gvim);;
-    -n) VIM=$(command -v nvim) || VIM=$(command -v vim);;
-    *) VIM=$(command -v tvim);;
+    -g) vimbin=$(command -v gvim);;
+    -n) vimbin=$(command -v nvim) || vimbin=$(command -v vim);;
+    *) vimbin=$(command -v tvim);;
 esac
-VIMWIKI_RC="$HOME/vimwiki/.vimwikirc"
-exec flock -w0 "$VIMWIKI_RC" "$VIM" -c "source $VIMWIKI_RC"
+exec flock -w0 "$index" "$vimbin" "${vimopts[@]}"
