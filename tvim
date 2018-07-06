@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 typeset -a vimopt=(
     '--cmd' 'let g:tvim = 1'
-    '--cmd' "set tgc mouse=a title titlestring=[%F]%m\\ -\\ TVIM"
+    '--cmd' "set tgc title titlestring=[%F]%m\\ -\\ TVIM"
+    '-c' 'set mouse=a'
 )
 
 error() {
@@ -12,4 +13,4 @@ error() {
 termbin=$(command -v st) || termbin=$(command -v xterm) || error "No terminal found!"
 vimbin=$(command -v nvim) || vimbin=$(command -v vim) || error "No vim binary found!"
 
-exec "$termbin" -e "$vimbin" "${vimopt[@]}" "$@" &>/dev/null & disown
+exec "$termbin" -c tvim -e "$vimbin" "${vimopt[@]}" "$@" &>/dev/null & disown

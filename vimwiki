@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 index="$HOME/vimwiki/index.wiki"
 typeset -a vimopts=(
-    '--cmd' 'packadd vimwiki'
     '-c' 'set titlestring=vimwiki'
-    "$index"
+    '-c' 'packadd vimwiki'
+    '-c' "e $index"
 )
 case $1 in
     -g) vimbin=$(command -v gvim);;
