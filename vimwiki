@@ -7,7 +7,7 @@ typeset -a vimopts=(
 )
 case $1 in
     -g) vimbin=$(command -v gvim);;
-    -n) vimbin=$(command -v nvim) || vimbin=$(command -v vim);;
+    -n) vimbin=$(command -v vim);;
     *) vimbin=$(command -v tvim);;
 esac
 exec flock -w0 "$index" "$vimbin" "${vimopts[@]}"
