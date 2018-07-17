@@ -9,7 +9,7 @@ error() {
     exit 1
 }
 
-termbin=$(command -v default-terminal-emulator) || termbin=$(command -v st) || termbin=$(command -v xterm) || error "No terminal found!"
+termbin=$(command -v default-terminal-emulator) || termbin=$(command -v xterm) || error "No terminal found!"
 vimbin=$(command -v nvim) || vimbin=$(command -v vim) || error "No vim binary found!"
 
 exec "$termbin" -c tvim -e "$vimbin" "${vimopt[@]}" "$@" &>/dev/null & disown
