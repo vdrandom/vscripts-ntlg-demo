@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# run with more compatible TERM value
+typeset -A terms=(
+    [rxvt-unicode-256color]='rxvt-unicode'
+    [st-256color]='xterm-256color'
+    [tmux-256color]='screen.xterm-new'
+)
+TERM="${terms[$TERM]:-$TERM}" exec "$@"

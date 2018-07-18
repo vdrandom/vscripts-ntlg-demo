@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-# cleanup -256color suffix from term and set something more compatible
-typeset -A TERMS
-TERMS=(
-    [st]='xterm'
-    [tmux]='screen'
-)
-TEMPTERM="${TERM%%-256color}"
-TERM="${TERMS[$TEMPTERM]-${TEMPTERM}}" exec ssh "$@"
