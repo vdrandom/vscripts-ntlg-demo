@@ -51,9 +51,7 @@ function contrast_colour {
 function print_colour {
     local colour="$1" contrast
     contrast=$(contrast_colour "$1")
-    printf "\\e[48;5;%sm" "$colour"                # Start block of colour
-    printf "\\e[38;5;%sm%3d" "$contrast" "$colour" # In contrast, print number
-    printf "\\e[0m "                               # Reset colour
+    printf "\\e[38;5;%s;48;5;%sm%3d\\e[0m " "$contrast" "$colour" "$colour"
 }
 
 # Starting at $1, print a run of $2 colours
