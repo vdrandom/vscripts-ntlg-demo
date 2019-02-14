@@ -7,9 +7,9 @@ fi
 
 selection=$(printf "%s\n" $VARIANTS|/usr/bin/dmenu -p display "$@")
 case $selection in
-    ($VARIANTS[1]) /usr/bin/xrandr --output $DISPLAY_RIGHT --off --output $DISPLAY_LEFT --auto ;;
-    ($VARIANTS[2]) /usr/bin/xrandr --output $DISPLAY_LEFT --off --output $DISPLAY_RIGHT --auto ;;
-    ($VARIANTS[3]) /usr/bin/xrandr --output $DISPLAY_LEFT --auto --output $DISPLAY_RIGHT --auto --right-of $DISPLAY_LEFT ;;
+    ($VARIANTS[1]) /usr/bin/xrandr --output $EXT --off --output $BUILTIN $BUILTIN_MODE[@];;
+    ($VARIANTS[2]) /usr/bin/xrandr --output $BUILTIN --off --output $EXT $EXT_MODE[@];;
+    ($VARIANTS[3]) /usr/bin/xrandr --output $BUILTIN $BUILTIN_MODE[@] --auto --output $EXT $EXT_MODE[@] --right-of $BUILTIN;;
     (*) exit 1 ;;
 esac
 /usr/bin/feh --bg-${WP_MODE-scale} $WALLPAPER
