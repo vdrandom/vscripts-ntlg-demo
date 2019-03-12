@@ -7,7 +7,7 @@ DEVNAME='ETPS/2 Elantech Touchpad'
 case $? in
     (1|'on') toggle='enable' flag_action=('rm' '-f');;
     (0|'off') toggle='disable' flag_action=('touch');;
-    (*) return 1;;
+    (*) exit 1;;
 esac
 notification_msg="Touchpad ${toggle}d"
 xinput $toggle $DEVNAME
