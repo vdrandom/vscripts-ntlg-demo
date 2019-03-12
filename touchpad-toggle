@@ -4,7 +4,7 @@ DEVNAME='ETPS/2 Elantech Touchpad'
 
 (($#)) || [[ ! -r $STATUSFILE ]]
 
-case $? in
+case ${1:-$?} in
     (1|'on') toggle='enable' flag_action=('/usr/bin/rm' '-f');;
     (0|'off') toggle='disable' flag_action=('/usr/bin/touch');;
     (*) exit 1;;
