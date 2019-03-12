@@ -5,11 +5,10 @@ DEVNAME='ETPS/2 Elantech Touchpad'
 (($#)) || [[ ! -r $STATUSFILE ]]
 
 case $? in
-    (1|'on') toggle='enable' flag_action=('rm' '-f');;
-    (0|'off') toggle='disable' flag_action=('touch');;
+    (1|'on') toggle='enable' flag_action=('/usr/bin/rm' '-f');;
+    (0|'off') toggle='disable' flag_action=('/usr/bin/touch');;
     (*) exit 1;;
 esac
-notification_msg="Touchpad ${toggle}d"
-xinput $toggle $DEVNAME
+/usr/bin/xinput $toggle $DEVNAME
 $flag_action[@] $STATUSFILE
-notify-send $notification_msg
+notify-send "Touchpad ${toggle}d"
