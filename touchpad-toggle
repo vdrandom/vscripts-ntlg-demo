@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+STATUSFILE="/run/user/${UID}/touchpad_disabled"
+DEVNAME='ETPS/2 Elantech Touchpad'
+
+(($#)) || [[ ! -r $STATUSFILE ]]
+
+case $? in
+    (1|'on') toggle='enable' flag_action=('rm' '-f');;
+    (0|'off') toggle='disable' flag_action=('touch');;
+    (*) return 1;;
+esac
+notification_msg="Touchpad ${toggle}d"
+xinput $toggle $DEVNAME
+$flag_action[@] $STATUSFILE
+notify-send $notification_msg
