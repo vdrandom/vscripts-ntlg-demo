@@ -11,4 +11,4 @@ case $? in
 esac
 /usr/bin/xinput $toggle $DEVNAME
 $flag_action[@] $STATUSFILE
-notify-send "Touchpad ${toggle}d"
+/usr/bin/notify-send "Touchpad ${toggle}d"
