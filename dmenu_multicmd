@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+#pylint: disable=C0111
+
+import os
+import subprocess
+import sys
+import yaml
+
+
+CONFIG_PATH = os.path.join(os.environ['HOME'], '.displayrc.yaml')
+
+
+def run_cmd(cmd, stdin=subprocess.PIPE, data=None):
+    proc = subprocess.Popen(
+        cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=stdin
+    )
+    stdout, stderr = (i.strip() for i in proc.communicate(data))
+    if proc.returncode:
+        err_msg = ['ERROR (' + str(proc.returncode) + '): ' + ' '.join(cmd)]
+        if stdout:
+            err_msg.append('out:\n' + stdout.decode('UTF-8'))
+        if stderr:
+            err_msg.append('err:\n' + stderr.decode('UTF-8'))
+        sys.stderr.write('\n'.join(err_msg) + '\n')
+    return stdout
+
+
+def run_multicmd(cmds):
+    for cmd in cmds:
+        run_cmd(cmds[cmd])
+
+
+def main():
+    config_path = sys.argv[1]
+    with open(config_path, mode='r') as config:
+        conf = yaml.load(config.read())
+    dmenu_cmd = ['/usr/bin/dmenu', '-p', conf.get('name', 'N/A')] + sys.argv[2:]
+    dmenu_opt = '\n'.join(conf['multicmd']).encode()
+    selection = run_cmd(dmenu_cmd, data=dmenu_opt).decode('UTF-8')
+    if not selection in conf['multicmd']:
+        sys.exit(1)
+
+    if 'cmd_pre' in conf:
+        run_multicmd(conf['cmd_pre'])
+
+    run_multicmd(conf['multicmd'][selection])
+
+    if 'cmd_post' in conf:
+        run_multicmd(conf['cmd_post'])
+
+if __name__ == '__main__':
+    main()
