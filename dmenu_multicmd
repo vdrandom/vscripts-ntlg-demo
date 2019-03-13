@@ -1,13 +1,24 @@
 #!/usr/bin/env python3
 #pylint: disable=C0111
-
-import os
+# config example (cmd_pre and cmd_post are optional):
+# ---
+# name: test
+# cmd_pre:
+#   - [/usr/bin/notify_send, 'I am precmd1!']
+#   - [/usr/bin/notify_send, 'I am precmd2!']
+# multicmd:
+#   selection1:
+#     - [/usr/bin/notify-send, 'I am command1 for selection1!']
+#     - [/usr/bin/notify-send, 'I am command2 for selection1!']
+#   selection2:
+#     - [/usr/bin/notify-send, 'I am command1 for selection2!']
+# cmd_post:
+#   - [/usr/bin/notify_send, 'I am postcmd1!']
+#   - [/usr/bin/notify_send, 'I am postcmd2!']
+# ---
 import subprocess
 import sys
 import yaml
-
-
-CONFIG_PATH = os.path.join(os.environ['HOME'], '.displayrc.yaml')
 
 
 def run_cmd(cmd, stdin=subprocess.PIPE, data=None):
@@ -27,7 +38,7 @@ def run_cmd(cmd, stdin=subprocess.PIPE, data=None):
 
 def run_multicmd(cmds):
     for cmd in cmds:
-        run_cmd(cmds[cmd])
+        run_cmd(cmd)
 
 
 def main():
@@ -39,14 +50,9 @@ def main():
     selection = run_cmd(dmenu_cmd, data=dmenu_opt).decode('UTF-8')
     if not selection in conf['multicmd']:
         sys.exit(1)
-
-    if 'cmd_pre' in conf:
-        run_multicmd(conf['cmd_pre'])
-
+    run_multicmd(conf.get('cmd_pre', tuple()))
     run_multicmd(conf['multicmd'][selection])
-
-    if 'cmd_post' in conf:
-        run_multicmd(conf['cmd_post'])
+    run_multicmd(conf.get('cmd_post', tuple()))
 
 if __name__ == '__main__':
     main()
