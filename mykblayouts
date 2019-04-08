@@ -1,14 +1,8 @@
 #!/usr/bin/env zsh
 
+layouts='us(altgr-intl),ru(typewriter)'
+opts='grp:win_space_toggle,compose:menu,ctrl:nocaps'
+
 # reset this before setting anything
 setxkbmap us -option
-
-if $(lsusb -d '04d9:0125' > /dev/null) || [[ -n $1 ]]; then
-    layouts='us(altgr-intl),ru(typewriter)'
-    opts='grp:win_space_toggle,compose:menu,ctrl:nocaps'
-else
-    layouts='us(ducky),ru(ducky)'
-    opts='grp:win_space_toggle,compose:menu'
-fi
-
 setxkbmap $layouts -option $opts

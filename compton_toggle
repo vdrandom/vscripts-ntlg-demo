@@ -15,7 +15,7 @@ if [[ -e $nvidia_dev ]]; then
 else
 	gpu_opts=(--dbe --vsync opengl --backend xrender)
 fi
-compton $gpu_opts[@] -cGC -t-5 -l-5 -r4 -o.55 &
+compton $gpu_opts[@] -cGC -t-5 -l-5 -r4 -o.55 --no-fading-openclose &
 pid=$!
 if [[ -n $pid ]]; then
 	printf '%s' $pid > $pidfile
