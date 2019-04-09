@@ -9,6 +9,9 @@ import yaml
 CONFNAME = '.termcolors.yaml'
 ESCAPES = {
     'colorspec': '{};rgb:{}/{}/{}',
+    # 'fgspec':  '10;rgb:{}/{}/{}',
+    # 'bdspec':  '706;rgb:{}/{}/{}',
+    # 'bgspec':  '11;rgb:{}/{}/{}',
 
     'default':   '\033]4;{}\033\\',
     'screen':    '\033P\033]4;{}\007\033\\',
