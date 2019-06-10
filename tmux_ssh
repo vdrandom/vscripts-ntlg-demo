@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+session_name=ssh
+ssh_cmd="termcompat ssh $1"
+window_name=${1%%.*}
+
+current_sessions=($(tmux list-sessions -F'#S'))
+(( $session_exists[(I)$session_name] )) || tmux new-session -ds $session_name
+
+exec tmux new-window -t ssh: -n $window_name $ssh_cmd
