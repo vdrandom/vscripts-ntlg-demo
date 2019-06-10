@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+#pylint: disable=C0111
+# config example (cmd_pre and cmd_post are optional):
+# ---
+# name: test
+# cmd_pre:
+#   - [/usr/bin/notify_send, 'I am precmd1!']
+#   - [/usr/bin/notify_send, 'I am precmd2!']
+# multicmd:
+#   selection1:
+#     - [/usr/bin/notify-send, 'I am command1 for selection1!']
+#     - [/usr/bin/notify-send, 'I am command2 for selection1!']
+#   selection2:
+#     - [/usr/bin/notify-send, 'I am command1 for selection2!']
+# cmd_post:
+#   - [/usr/bin/notify_send, 'I am postcmd1!']
+#   - [/usr/bin/notify_send, 'I am postcmd2!']
+# ---
+import subprocess
+import sys
+import yaml
+
+
+def run_cmd(cmd, stdin=subprocess.PIPE, data=None):
+    proc = subprocess.Popen(
+        cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=stdin
+    )
+    stdout, stderr = (i.strip() for i in proc.communicate(data))
+    if proc.returncode:
+        err_msg = ['ERROR (' + str(proc.returncode) + '): ' + ' '.join(cmd)]
+        if stdout:
+            err_msg.append('out:\n' + stdout.decode('UTF-8'))
+        if stderr:
+            err_msg.append('err:\n' + stderr.decode('UTF-8'))
+        sys.stderr.write('\n'.join(err_msg) + '\n')
+    return stdout
+
+
+def run_multicmd(cmds):
+    for cmd in cmds:
+        run_cmd(cmd)
+
+
+def main():
+    config_path = sys.argv[1]
+    with open(config_path, mode='r') as config:
+        conf = yaml.load(config.read())
+    if len(sys.argv) < 3:
+        print('\n'.join(conf['multicmd']))
+    else:
+        selection = sys.argv[2]
+        if not selection in conf['multicmd']:
+            sys.exit(1)
+        run_multicmd(conf.get('cmd_pre', tuple()))
+        run_multicmd(conf['multicmd'][selection])
+        run_multicmd(conf.get('cmd_post', tuple()))
+
+if __name__ == '__main__':
+    main()
