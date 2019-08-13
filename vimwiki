@@ -1,13 +1,17 @@
-#!/usr/bin/bash
-index="$HOME/vimwiki/index.wiki"
-typeset -a vimopts=(
+#!/usr/bin/zsh
+INDEX="$HOME/vimwiki/index.md"
+WIKIOPTS="[{'path': '$HOME/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]"
+VIMOPTS=(
     '-c' 'set titlestring=vimwiki'
+    '-c' "let g:vimwiki_list = $WIKIOPTS"
     '-c' 'packadd vimwiki'
-    '-c' "e $index"
+    '-c' "e $INDEX"
 )
+
 case $1 in
     -g) vimbin=$(command -v gvim);;
     -n) vimbin=$(command -v vim);;
     *) vimbin=$(command -v tvim);;
 esac
-exec flock -w0 "$index" "$vimbin" "${vimopts[@]}"
+
+exec flock -w0 $INDEX $vimbin ${VIMOPTS[@]}
