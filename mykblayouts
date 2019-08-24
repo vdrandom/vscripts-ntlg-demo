@@ -1,7 +1,9 @@
 #!/usr/bin/env zsh
 
 layouts='us(altgr-intl),ru(typewriter)'
-opts='grp:win_space_toggle,compose:menu,ctrl:nocaps'
+(($#)) \
+    && opts='grp:win_space_toggle,compose:menu' \
+    || opts='grp:win_space_toggle,compose:menu,ctrl:nocaps'
 
 # reset this before setting anything
 setxkbmap us -option
