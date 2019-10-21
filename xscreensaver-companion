@@ -1,5 +1,23 @@
 #!/usr/bin/env zsh
 
+pidfile=${XDG_RUNTIME_DIR-/run/user/$UID}/xscreensaver-companion.pid
+trap "rm -f $pidfile" INT KILL
+
+function init_pidfile
+{
+    local pid
+    if read pid < $pidfile; then
+        if kill -0 $pid; then
+            echo 'I am already running!' >&2
+            exit 1
+        else
+            echo 'Remove stale lock file.' >&2
+            rm $pidfile
+        fi
+    fi
+    echo $$ > $pidfile
+}
+
 function parse_actions
 {
     while read action _; do
@@ -17,4 +35,5 @@ function parse_actions
     done
 }
 
+init_pidfile
 /usr/bin/xscreensaver-command -watch | parse_actions
