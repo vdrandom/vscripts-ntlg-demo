@@ -1,10 +1,6 @@
 #!/usr/bin/env zsh
-BACKGROUND='/tmp/screen_locked.png'
 /usr/bin/notify-send DUNST_COMMAND_PAUSE
-/usr/bin/scrot $BACKGROUND
-/usr/bin/mogrify -scale 10% -colorspace GRAY -scale 1000% $BACKGROUND
 /usr/bin/setxkbmap us
-until /usr/bin/i3lock -entc 661111 -i $BACKGROUND; do :; done
+until /usr/bin/i3lock -entc 333333; do :; done
 $HOME/vscripts/mykblayouts
-/usr/bin/rm $BACKGROUND
 /usr/bin/notify-send DUNST_COMMAND_RESUME

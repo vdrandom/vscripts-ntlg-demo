@@ -10,7 +10,7 @@ function parse_actions
                 /usr/bin/notify-send DUNST_COMMAND_PAUSE
                 ;;
             (UNBLANK)
-                $HOME/vscripts/mykblayouts
+                $HOME/git/mine/vscripts/mykblayouts
                 /usr/bin/notify-send DUNST_COMMAND_RESUME
                 ;;
         esac
