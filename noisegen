@@ -7,4 +7,4 @@ case $1 in
     *) printf "%s is a wrong noise type\n" $1 >&2 ; exit 1 ;;
 esac
 
-play -n synth $noise_type
+exec play -n synth $noise_type

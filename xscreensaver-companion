@@ -3,6 +3,17 @@
 pidfile=${XDG_RUNTIME_DIR-/run/user/$UID}/xscreensaver-companion.pid
 trap "rm -f $pidfile" INT KILL
 
+function check_start
+{
+    # check if the service is running and, if not, start it in the background
+    # and detach
+    if pgrep -u $USER $1 >/dev/null; then
+        return 0
+    else
+        $* &>/dev/null </dev/null & disown
+    fi
+}
+
 function init_pidfile
 {
     local pid
@@ -23,17 +34,18 @@ function parse_actions
     while read action _; do
         case $action in
             (LOCK|BLANK)
-                /usr/bin/setxkbmap us -option
-                /usr/bin/numlockx off
-                /usr/bin/notify-send DUNST_COMMAND_PAUSE
+                setxkbmap us -option
+                notify-send DUNST_COMMAND_PAUSE
                 ;;
             (UNBLANK)
+                check_start gxkb
                 $HOME/git/mine/vscripts/mykblayouts
-                /usr/bin/notify-send DUNST_COMMAND_RESUME
+                $HOME/.local/bin/touchpad-config
+                notify-send DUNST_COMMAND_RESUME
                 ;;
         esac
     done
 }
 
 init_pidfile
-/usr/bin/xscreensaver-command -watch | parse_actions
+xscreensaver-command -watch | parse_actions

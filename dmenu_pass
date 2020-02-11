@@ -28,5 +28,5 @@ if [[ $typeit -eq 0 ]]; then
     fi
     notify-send -a "pass" "$msg" "$password"
 else
-    pass show "$password" | { read -r pass; printf %s "$pass"; } | xdotool type --clearmodifiers --file -
+    gopass show "$password" | { read -r pass; printf %s "$pass"; } | xdotool type --clearmodifiers --file -
 fi
