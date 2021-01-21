@@ -4,8 +4,7 @@
 from sys import argv
 
 def from_base256(number):
-    base = 16 if number.startswith('0x') else 10
-    num = int(number, base)
+    num = int(number, 0)
     addr = list()
     for e in range(3, -1, -1):
         multiplier = 256 ** e
