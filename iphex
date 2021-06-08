@@ -4,7 +4,7 @@
 from sys import argv
 
 def from_base256(number):
-    num = int(number, 0)
+    num = int(number, 16)
     addr = list()
     for e in range(3, -1, -1):
         multiplier = 256 ** e
@@ -20,7 +20,7 @@ def to_base256(addr):
     for e in range(3, -1, -1):
         num += int(addr[3-e]) * 256 ** e
 
-    return str(num)
+    return '{0:08x}'.format(num)
 
 try:
     result = from_base256(argv[1])

@@ -35,13 +35,13 @@ function parse_actions
         case $action in
             (LOCK|BLANK)
                 setxkbmap us -option
-                notify-send DUNST_COMMAND_PAUSE
+                dunstctl set-paused true
                 ;;
             (UNBLANK)
                 check_start gxkb
                 $HOME/git/mine/vscripts/mykblayouts
                 $HOME/.local/bin/touchpad-config
-                notify-send DUNST_COMMAND_RESUME
+                dunstctl set-paused false
                 ;;
         esac
     done

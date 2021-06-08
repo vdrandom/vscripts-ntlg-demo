@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+
+export GDK_SCALE=$1 GDK_DPI_SCALE=$(printf '%.1f' $((1.0/$1)))
+exec $2

@@ -1,0 +1,51 @@
+#!/usr/bin/env zsh
+#------------------------------------------------------------------------------
+# xsettingsd systemd unit:
+# --
+# [Unit]
+# Description=xsettingsd magic
+#
+# [Service]
+# ExecStart=/usr/bin/xsettingsd
+# ExecReload=/bin/kill -HUP $MAINPID
+#
+# [Install]
+# WantedBy=default.target
+# --
+XSETTINGSD_TEMPLATE='Xft/Hinting 1\nXft/HintStyle "hintslight"\nXft/Antialias 1\nXft/RGBA "rgb"\nXft/DPI %s\n'
+XSETTINGSD_CONFIG=/run/user/$UID/xsettingsd-config
+
+XKB_OPTS='grp:win_space_toggle,compose:menu'
+XKB_LAYOUTS='us(altgr-intl),ru(typewriter)'
+
+WALLPAPER=$HOME/.wallpaper
+
+TOUCHPAD_DEV='SynPS/2 Synaptics TouchPad'
+
+DPI=${1:-96}
+#------------------------------------------------------------------------------
+
+# reset xkbmap, set xkbmap
+setxkbmap us -option
+setxkbmap $XKB_LAYOUTS -option $XKB_OPTS
+
+# configure touchpad
+xinput set-prop $TOUCHPAD_DEV 'libinput Click Method Enabled' 0 1
+xinput set-prop $TOUCHPAD_DEV 'libinput Middle Emulation Enabled' 1
+
+# background
+feh --bg-fill $WALLPAPER
+
+# dpi - xsettignsd, has to be started here because config is absent on boot
+printf $XSETTINGSD_TEMPLATE $(($DPI * 1024)) > $XSETTINGSD_CONFIG
+systemctl --quiet --user is-active xsettingsd || systemctl --user start xsettingsd
+systemctl --user reload xsettingsd.service
+
+# dpi - other
+xrdb -merge <(echo "Xft.dpi: $DPI")
+xrandr --dpi $DPI
+i3-msg restart
+
+# report
+current_config=$(autorandr --current)
+notify-send "$current_config config applied"

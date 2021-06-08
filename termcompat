@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # run with more compatible TERM value
 typeset -A terms=(
+    [alacritty]='xterm'
     [xterm-kitty]='xterm'
     [rxvt-unicode-256color]='rxvt-unicode'
     [st-256color]='xterm-256color'
