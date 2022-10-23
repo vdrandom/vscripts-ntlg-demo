@@ -1,10 +1,14 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # run with more compatible TERM value
-typeset -A terms=(
-    [alacritty]='xterm'
-    [xterm-kitty]='xterm'
-    [rxvt-unicode-256color]='rxvt-unicode'
-    [st-256color]='xterm-256color'
-    [tmux-256color]='screen.xterm-new'
-)
-TERM="${terms[$TERM]:-$TERM}" exec "$@"
+case $TERM in
+    (st-*) ;&
+    (alacritty*) ;&
+    (xterm-kitty) ;&
+        export TERM=xterm;;
+    (rxvt-unicode-*)
+        export TERM=rxvt-unicode;;
+    (tmux-*)
+        export TERM=screen.xterm-new;;
+esac
+
+exec "$@"
