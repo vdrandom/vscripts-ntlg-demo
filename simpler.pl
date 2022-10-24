@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# hello world
 # taken from https://github.com/iraquitan/custom-scripts/blob/master/simpler.sh
 use open ':std', ':encoding(UTF-8)';
 my $block = shift || (chr(0x2588) x 3);
